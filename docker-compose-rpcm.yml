@@ -1,0 +1,38 @@
+---
+version: '2.3'
+services:
+  chartmuseum:
+    image: infortrend/chartmuseum:A02
+    user: root
+    container_name: cm
+    restart: unless-stopped
+    privileged: false
+    network_mode: "bridge"
+    ports:
+      - "0.0.0.0:4100:8080"
+    tty: true
+    volumes:
+      #- /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ${share_folder_1}/chartmusem:/var/lib/chartmuseum
+    environment:
+      - CHART_SERVER_URL=https://charts.infortrend.com
+  registry-proxy:
+    image: registry:2
+    user: root
+    container_name: rp
+    restart: unless-stopped
+    privileged: false
+    network_mode: "bridge"
+    ports:
+      - "0.0.0.0:5000:5000/tcp"
+    tty: true
+    volumes:
+      #- /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ${share_folder_1}/registry:/var/lib/registry
+    environment:
+      - REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io
+
+#export share_folder_1=/Pool/Volume/k8sapp; mkdir -p ${share_folder_1}; docker-compose -f ./docker-compose-rpcm.yml up -d
+#export share_folder_1=/Pool/Volume/k8sapp; mkdir -p ${share_folder_1}; docker-compose -f ./docker-compose-rpcm.yml down

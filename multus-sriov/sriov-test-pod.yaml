@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sriov-test-pod
+  namespace: default
+  annotations:
+    k8s.v1.cni.cncf.io/networks: sriov-mlnx
+spec:
+  containers:
+  - name: sriovpod
+    command: ["/bin/bash", "-c", "trap : TERM INT; sleep infinity & wait"]
+    image: ubuntu:18.04
+    resources:
+      requests:
+        mellanox.com/mlnx_sriov: 1
+      limits:
+        mellanox.com/mlnx_sriov: 1
+
