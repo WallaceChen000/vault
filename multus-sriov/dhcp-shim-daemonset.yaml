@@ -1,0 +1,70 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: dhcp-shim-ds-amd64
+  namespace: kube-system
+  labels:
+    tier: node
+    app: dhcp-shim
+spec:
+  selector:
+    matchLabels:
+      name: dhcp-shim
+  template:
+    metadata:
+      labels:
+        name: dhcp-shim
+        tier: node
+        app: shcp-shim
+    spec:
+      hostNetwork: true
+      nodeSelector:
+        kubernetes.io/arch: amd64
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+      #shareProcessNamespace: true
+      containers:
+      - name: dhcp-shim
+        image: infortrend/dhcp-shim:A02
+        imagePullPolicy: IfNotPresent
+        tty: true
+        securityContext:
+          runAsUser: 0
+          #allowPrivilegeEscalation: false
+          privileged: true
+          #readOnlyRootFilesystem: false
+          #capabilities:
+            #drop:
+              #- ALL
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "50Mi"
+          limits:
+            cpu: "500m"
+            memory: "200Mi"
+        volumeMounts:
+        - name: cnibin
+          mountPath: /opt/cni/bin
+        - name: run
+          mountPath: /run
+        #- name: proc
+          #mountPath: /proc
+        #- name: sys
+          #mountPath: /sys
+      volumes:
+        - name: cnibin
+          hostPath:
+            path: /opt/cni/bin
+        - name: run
+          hostPath:
+            path: /run
+        - name: proc
+          hostPath:
+            path: /proc
+        - name: sys
+          hostPath:
+            path: /sys

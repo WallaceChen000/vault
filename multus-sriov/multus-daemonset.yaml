@@ -189,8 +189,8 @@ spec:
       containers:
       - name: kube-multus
         #image: ghcr.io/k8snetworkplumbingwg/multus-cni:stable #v4.0-alpha NG
-        image: ghcr.io/k8snetworkplumbingwg/multus-cni:v3.7.1
-        #image: ghcr.io/k8snetworkplumbingwg/multus-cni:v3.9.2
+        #image: ghcr.io/k8snetworkplumbingwg/multus-cni:v3.7.1
+        image: ghcr.io/k8snetworkplumbingwg/multus-cni:v3.9.2
         command: ["/entrypoint.sh"]
         args:
         - "--multus-conf-file=auto"
@@ -214,9 +214,9 @@ spec:
           mountPath: /tmp/multus-conf
       initContainers:
         - name: install-multus-binary
-          #image: ghcr.io/k8snetworkplumbingwg/multus-cni:stable #v4.0-alpha NG
-          image: ghcr.io/k8snetworkplumbingwg/multus-cni:v3.7.1
-          #image: ghcr.io/k8snetworkplumbingwg/multus-cni:v3.9.2
+          #image: ghcr.io/k8snetworkplumbingwg/multus-cni:stable   #v4.0-alpha NG
+          #image: ghcr.io/k8snetworkplumbingwg/multus-cni:v3.7.1   #let sriov-cni pod in terminating state when you delete it
+          image: ghcr.io/k8snetworkplumbingwg/multus-cni:v3.9.2
           command:
             - "cp"
             - "/usr/src/multus-cni/bin/multus"

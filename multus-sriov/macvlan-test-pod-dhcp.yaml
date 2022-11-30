@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: macvlan-test-pod-dhcp
+  annotations:
+    k8s.v1.cni.cncf.io/networks: macvlan-cr-dhcp
+spec:
+  containers:
+  - name: macvlanpod
+    command: ["/bin/bash", "-c", "trap : TERM INT; sleep infinity & wait"]
+    image: ubuntu:18.04
+    volumeMounts:
+      - name: cnirun
+        mountPath: /run/cni
+  volumes:
+    - name: cnirun
+      hostPath:
+        path: /run/cni

@@ -1,0 +1,20 @@
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: sriov-mlnx-host-local
+  annotations:
+    k8s.v1.cni.cncf.io/resourceName: "mellanox.com/mlnx_sriov"
+spec:
+  config: '{
+    "type": "sriov",
+    "cniVersion": "0.3.1",
+    "name": "sriov-network",
+    "ipam": {
+      "type": "host-local",
+      "subnet": "192.168.3.0/24",
+      "routes": [{
+        "dst": "0.0.0.0/0"
+      }],
+      "gateway": "192.168.3.254"
+    }
+  }'

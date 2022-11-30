@@ -1,0 +1,23 @@
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: sriov-mlnx-dhcp
+  annotations:
+    k8s.v1.cni.cncf.io/resourceName: "mellanox.com/mlnx_sriov"
+spec:
+  config: '{
+    "type": "sriov",
+    "cniVersion": "0.3.1",
+    "name": "sriov-network",
+    "ipam": {
+      "type": "dhcp",
+      "daemonSocketPath": "/run/cni/dhcp.sock",
+      "request": [{
+        "skipDefault": false
+      }],
+      "provide": [{
+        "option": "host-name",
+        "fromArg": "K8S_POD_NAME"
+      }]
+    }
+  }'

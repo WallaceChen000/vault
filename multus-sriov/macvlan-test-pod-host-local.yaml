@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: macvlan-test-pod
+  name: macvlan-test-pod-host-local
   annotations:
-    k8s.v1.cni.cncf.io/networks: macvlan-conf,macvlan-conf
+    k8s.v1.cni.cncf.io/networks: macvlan-cr-host-local,macvlan-cr-host-local
 spec:
   containers:
   - name: macvlanpod

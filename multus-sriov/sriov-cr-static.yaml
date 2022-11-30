@@ -1,0 +1,27 @@
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: sriov-mlnx-static
+  annotations:
+    k8s.v1.cni.cncf.io/resourceName: "mellanox.com/mlnx_sriov"
+spec:
+  config: '{
+    "type": "sriov",
+    "cniVersion": "0.3.1",
+    "name": "sriov-network",
+    "ipam": {
+      "type": "static",
+      "addresses": [{
+          "address": "192.168.5.245/24",
+          "gateway": "192.168.5.254"
+      }],
+      "routes": [{
+        "dst": "0.0.0.0/0"
+      }],
+      "dns": {
+        "nameservers" : ["8.8.8.8"],
+        "domain": "infortrend.com",
+        "search": [ "ift.local" ]
+      }
+    }
+  }'

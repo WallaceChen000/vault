@@ -1,0 +1,22 @@
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: macvlan-cr-host-local
+spec:
+  # we can remove "master" key for not specified of any host interfaces
+  config: '{
+    "cniVersion": "0.3.1",
+    "type": "macvlan",
+    "mode": "bridge",
+    "master": "enp7s0f0",
+    "ipam": {
+      "type": "host-local",
+      "subnet": "192.168.2.0/24",
+      "rangeStart": "192.168.2.200",
+      "rangeEnd": "192.168.2.249",
+      "routes": [
+        { "dst": "0.0.0.0/0" }
+      ],
+      "gateway": "192.168.2.254"
+    }
+  }'

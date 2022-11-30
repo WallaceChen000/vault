@@ -2,21 +2,21 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: kube-sriov-cni-ds-amd64
+  name: kube-static-cni-ds-amd64
   namespace: kube-system
   labels:
     tier: node
-    app: sriov-cni
+    app: static-cni
 spec:
   selector:
     matchLabels:
-      name: sriov-cni
+      name: static-cni
   template:
     metadata:
       labels:
-        name: sriov-cni
+        name: static-cni
         tier: node
-        app: sriov-cni
+        app: static-cni
     spec:
       nodeSelector:
         kubernetes.io/arch: amd64
@@ -25,10 +25,8 @@ spec:
         operator: Exists
         effect: NoSchedule
       containers:
-      - name: kube-sriov-cni
-        #image: ghcr.io/k8snetworkplumbingwg/sriov-cni
-        image: ghcr.io/k8snetworkplumbingwg/sriov-cni:v2.6.3
-        #image: ghcr.io/k8snetworkplumbingwg/sriov-cni:v2.6.2
+      - name: kube-static-cni
+        image: infortrend/cni-static:A01
         imagePullPolicy: IfNotPresent
         securityContext:
           allowPrivilegeEscalation: false

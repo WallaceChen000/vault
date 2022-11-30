@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: sriov-test-pod
+  name: sriov-test-pod-host-local
   namespace: default
   annotations:
-    k8s.v1.cni.cncf.io/networks: sriov-mlnx
+    k8s.v1.cni.cncf.io/networks: sriov-mlnx-host-local
 spec:
   containers:
   - name: sriovpod
