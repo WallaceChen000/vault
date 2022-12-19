@@ -1,0 +1,19 @@
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetworkNodePolicy
+metadata:
+  name: policy-mlx5
+  namespace: cattle-sriov-system
+  #namespace: sriov
+spec:
+  nodeSelector:
+    feature.node.kubernetes.io/network-sriov.capable: "true"
+  resourceName: mlx5
+  priority: 99
+  mtu: 9000
+  numVfs: 4
+  nicSelector:
+      deviceID: "1017"
+      rootDevices:
+      - "0000:05:00.1"
+      vendor: "15b3"
+  deviceType: netdevice

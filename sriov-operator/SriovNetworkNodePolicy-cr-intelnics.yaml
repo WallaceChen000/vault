@@ -1,0 +1,18 @@
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetworkNodePolicy
+metadata:
+  name: policy-1
+  namespace: cattle-sriov-system
+spec:
+  nodeSelector:
+    feature.node.kubernetes.io/network-sriov.capable: "true"
+  resourceName: intelnics
+  priority: 99
+  mtu: 9000
+  numVfs: 2
+  nicSelector:
+      deviceID: "1521"
+      rootDevices:
+      - 0000:07:00.0
+      vendor: "8086"
+  deviceType: netdevice

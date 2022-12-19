@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sriov-test-pod-sriov-operator
+  namespace: sriov
+  #namespace: cattle-sriov-system
+  annotations:
+    k8s.v1.cni.cncf.io/networks: network-mlx5-alter
+spec:
+  containers:
+  - name: sriovpod
+    command: ["/bin/bash", "-c", "trap : TERM INT; sleep infinity & wait"]
+    image: infortrend/sriov-test:A01
+    resources:
+      requests:
+        rancher.io/mlx5: "1"
+      limits:
+        rancher.io/mlx5: "1"

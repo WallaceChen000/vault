@@ -1,0 +1,19 @@
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetworkNodePolicy
+metadata:
+  name: policy-mlx5-alter
+  namespace: cattle-sriov-system
+spec:
+  nodeSelector:
+    feature.node.kubernetes.io/network-sriov.capable: "true"
+  resourceName: mlx5
+  priority: 99 #The priority is an integer value between 0 and 99. A smaller value receives higher priority
+  mtu: 9000 #
+  needVhostNet: false #DPDK set to true
+  numVfs: 4
+  nicSelector:
+      deviceID: "1017"
+      rootDevices:
+      - "0000:05:00.0"
+      vendor: "15b3"
+  deviceType: netdevice
